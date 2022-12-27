@@ -22,41 +22,14 @@ self.addEventListener("install", function(event) {
     );
 });
 
-self.addEventListener('push', function(event) {
-    var notificationTitle = 'My App';
-    var notificationOptions = {
-        body: 'SW registered',
-        icon: '/icon.png',
-        data: {
-            url: '/'
-        }
+self.addEventListener('push', event => {
+    const notificationData = event.data.json();
+    const title = notificationData.title;
+    const options = {
+        body: notificationData.body,
+        // You can add additional options here, such as a custom icon or sound
     };
-
-    event.waitUntil(
-        self.registration.showNotification(notificationTitle, notificationOptions)
-    );
-});
-
-
-self.addEventListener('notificationclick', function(event) {
-    event.notification.close();
-
-    event.waitUntil(
-        clients.matchAll({
-            type: 'window'
-        })
-            .then(function(clientList) {
-                for (var i = 0; i < clientList.length; i++) {
-                    var client = clientList[i];
-                    if (client.url === '/' && 'focus' in client) {
-                        return client.focus();
-                    }
-                }
-                if (clients.openWindow) {
-                    return clients.openWindow(event.notification.data.url);
-                }
-            })
-    );
+    event.waitUntil(self.registration.showNotification(title, options));
 });
 
 self.addEventListener("fetch", function(event) {
