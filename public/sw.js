@@ -66,14 +66,6 @@ self.addEventListener('periodicSync', event => {
         return
     }
     if (event.tag === 'call_random') {
-        fetch('/random')
-            .then(response => {
-                if (!response.ok) {
-                    console.log("Periodic sync failed")
-                }
-            })
-            .catch(error => {
-                console.log(error)
-            });
+        event.waitUntil(fetch('/random'))
     }
 });
