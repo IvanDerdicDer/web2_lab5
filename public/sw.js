@@ -6,16 +6,17 @@ const assetToCache = [
     "/",
     "/manifest.json",
     "/javascripts/recorder.js",
+    "/javascripts/push-notifications.js",
     "/sw.js",
     "/stylesheets/style.css",
     "/icon.png",
     "/favicon.ico"
 ];
-self.addEventListener("install", function(event) {
+self.addEventListener("install", function (event) {
     event.waitUntil(
         caches
             .open(CACHE_NAME)
-            .then(function(cache) {
+            .then(function (cache) {
                 return cache.addAll(assetToCache);
             })
             .catch(console.error)
@@ -32,23 +33,27 @@ self.addEventListener('push', event => {
     event.waitUntil(self.registration.showNotification(title, options));
 });
 
-self.addEventListener("fetch", function(event) {
+self.addEventListener("fetch", function (event) {
     event.respondWith(
-        caches.match(event.request).then(function(response) {
-            if (response.status === 404) {
+        caches.match(event.request).then(function (response) {
+            if (response && response.status === 404) {
                 return "ERROR";
             }
 
-            if (response){
-                return response
-            }
-
-            const fetch_promise = fetch(event.request).then((network_response) => {
-                return caches.open(CACHE_NAME).then((cache) => {
-                    cache.put(event.request.url, network_response.clone())
-                    return network_response
+            const fetch_promise = fetch(event.request)
+                .then((network_response) => {
+                    return caches.open(CACHE_NAME)
+                        .then((cache) => {
+                            cache.put(event.request.url, network_response.clone())
+                            return network_response
+                        })
+                        .catch((error) => {
+                            console.log(error)
+                        })
                 })
-            })
+                .catch((error) => {
+                    console.log(error)
+                })
 
             return response || fetch_promise
         })

@@ -17,5 +17,15 @@
   "scope": "/",
   "display": "standalone",
   "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "background_color": "#ffffff",
+  "gcm_sender_id": "317325965584",
+  "gcm_user_visible_only": true,
+  "permissions": {
+    "push": {
+      "sender_id": "317325965584"
+    }
+  },
+  "webpush": {
+    "vapid_key": "BOe_LmwxtiiKUXPtfNHOuPvSQb7tyukYBIjmGg8Q5tSQQ84Syr30pdLwdQuFRrCaqphzgriwHxDta2lBAnqLWok"
+  }
 }
