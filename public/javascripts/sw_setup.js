@@ -15,7 +15,7 @@ if ('serviceWorker' in navigator) {
 if ('PeriodicSyncManager' in window) {
     navigator.serviceWorker.ready.then(serviceWorker => {
         // Request permission to use the background sync feature
-        navigator.permissions.request({name: 'periodic-background-sync'})
+        navigator.permissions.query({name: 'periodic-background-sync'})
             .then(permissionStatus => {
                 if (permissionStatus.status === 'granted') {
                     // The user has granted permission to use the background sync feature
