@@ -17,7 +17,7 @@ if ('PeriodicSyncManager' in window) {
         // Request permission to use the background sync feature
         navigator.permissions.query({name: 'periodic-background-sync'})
             .then(permissionStatus => {
-                if (permissionStatus.status === 'granted') {
+                if (permissionStatus.state === 'granted') {
                     // The user has granted permission to use the background sync feature
                     serviceWorker.periodicSync.register('call_random', {
                         minInterval: 10 * 1000 // Run every hour
