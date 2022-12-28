@@ -30,19 +30,10 @@ const webpush = require('web-push');
 // Umjesto baze podataka, čuvam pretplate u
 // datoteci:
 let subscriptions = [];
-const SUBS_FILENAME = 'subscriptions.json';
-try {
-    subscriptions =
-        JSON.parse(fs.readFileSync(SUBS_FILENAME));
-} catch (error) {
-    console.log(error);
-}
 
 app.post("/saveSubscription", function (req, res) {
     let sub = req.body.sub;
     subscriptions.push(sub);
-    fs.writeFileSync(SUBS_FILENAME,
-        JSON.stringify(subscriptions));
     res.json({
         success: true
     });
@@ -55,8 +46,8 @@ function periodic_push() {
     subscriptions.forEach(sub => {
         try {
             webpush.sendNotification(sub, JSON.stringify({
-                title: 'Notification',
-                body: 'You got a notification'
+                title: 'Background sync',
+                body: 'Background sync happened'
             }));
         } catch (error) {
             console.error(error);
@@ -64,7 +55,12 @@ function periodic_push() {
     });
 }
 
-setInterval(periodic_push, 10 * 1000)
+app.get("/random", (req, res) => {
+    periodic_push()
+    res.json({
+        success: true
+    });
+})
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

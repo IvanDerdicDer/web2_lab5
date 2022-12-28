@@ -16,20 +16,6 @@
 </body>
 <script src="javascripts/push-notifications.js"></script>
 <script src="javascripts/recorder.js"></script>
-<script>
-    if('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('sw.js')
-                .then((registration) => {
-                    console.log(`service worker registered succesfully ${registration}`)
-                })
-                .catch((err) => {
-                    console.log(`Error registring ${err}`)
-                })
-        })
-    } else {
-        console.log(`Service worker is not supported in this browser.`)
-    }
-</script>
+<script src="javascripts/sw_setup.js"></script>
 
 </html>

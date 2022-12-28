@@ -45,7 +45,11 @@ async function setupPushSubscription() {
     try {
         let reg = await navigator.serviceWorker.ready;
         let sub = await reg.pushManager.getSubscription();
-        if (sub === null) {
+        if (sub) {
+            await sub.unsubscribe()
+        }
+        sub = null
+        if (!sub) {
             let publicKey = "BOe_LmwxtiiKUXPtfNHOuPvSQb7tyukYBIjmGg8Q5tSQQ84Syr30pdLwdQuFRrCaqphzgriwHxDta2lBAnqLWok";
             sub = await reg.pushManager.subscribe({
                 userVisibleOnly: true,

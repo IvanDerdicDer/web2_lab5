@@ -59,3 +59,21 @@ self.addEventListener("fetch", function (event) {
         })
     );
 });
+
+self.addEventListener('periodicSync', event => {
+    if(!navigator.onLine){
+        console.log('Periodic Sync aborted. App is offline')
+        return
+    }
+    if (event.tag === 'call_random') {
+        fetch('/random')
+            .then(response => {
+                if (!response.ok) {
+                    console.log("Periodic sync failed")
+                }
+            })
+            .catch(error => {
+                console.log(error)
+            });
+    }
+});
