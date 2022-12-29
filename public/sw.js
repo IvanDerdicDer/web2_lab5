@@ -66,6 +66,6 @@ self.addEventListener('periodicSync', event => {
         return
     }
     if (event.tag === 'call_random') {
-        event.waitUntil(fetch('/random'))
+        event.waitUntil(fetch('/random').then(() => {}).catch(() => {}))
     }
 });
