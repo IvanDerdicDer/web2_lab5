@@ -60,12 +60,13 @@ self.addEventListener("fetch", function (event) {
     );
 });
 
-self.addEventListener('periodicSync', event => {
+self.addEventListener('periodicsync', event => {
+    console.log("Entered periodic sync")
     if(!navigator.onLine){
         console.log('Periodic Sync aborted. App is offline')
         return
     }
-    if (event.tag === 'call_random') {
+    if (event.tag === 'call-random') {
         event.waitUntil(fetch('/random').then(() => {}).catch(() => {}))
     }
 });

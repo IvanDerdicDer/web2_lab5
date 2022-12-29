@@ -19,10 +19,10 @@ if ('PeriodicSyncManager' in window) {
             .then(permissionStatus => {
                 if (permissionStatus.state === 'granted') {
                     // The user has granted permission to use the background sync feature
-                    serviceWorker.periodicSync.register('call_random', {
+                    serviceWorker.periodicSync.register('call-random', {
                         minInterval: 10 * 1000 // Run every hour
                     }).then(syncRegistration => {
-                        console.log(syncRegistration)
+                        console.log("Periodic sync registered")
                     }).catch(error => {
                         console.log(error)
                     });
