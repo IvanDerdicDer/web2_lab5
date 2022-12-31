@@ -44,14 +44,12 @@ function periodic_push() {
         'BOe_LmwxtiiKUXPtfNHOuPvSQb7tyukYBIjmGg8Q5tSQQ84Syr30pdLwdQuFRrCaqphzgriwHxDta2lBAnqLWok',
         'Ned9YetVMoYdPaEOX5dA-NJZm0estqPofq1Fm7fzMfk');
     subscriptions.forEach(sub => {
-        try {
             webpush.sendNotification(sub, JSON.stringify({
                 title: 'Background sync',
                 body: 'Background sync happened'
-            }));
-        } catch (error) {
-            console.error(error);
-        }
+            })).catch((error) => {
+                console.log(error)
+            })
     });
 }
 

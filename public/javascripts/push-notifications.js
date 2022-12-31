@@ -42,6 +42,11 @@
 
 
 async function setupPushSubscription() {
+    if(!navigator.onLine){
+        console.log('Push Subscription Aborted aborted. App is offline')
+        return
+    }
+
     try {
         let reg = await navigator.serviceWorker.ready;
         let sub = await reg.pushManager.getSubscription();
